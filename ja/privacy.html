@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>プライバシーポリシー — NoiseStorage</title>
+<meta name="description" content="NoiseStorage はあなたについて何も集めません。">
+<link rel="canonical" href="https://noisestorage.com/ja/privacy.html">
+<style>
+  :root { color-scheme: light dark; --fg: #1b1b1f; --bg: #fbfbfd; --muted: #5f6368; --line: #e3e3e8; --accent: #2f5bea; }
+  @media (prefers-color-scheme: dark) { :root { --fg: #e8e8ee; --bg: #121216; --muted: #a0a0ab; --line: #2a2a31; --accent: #7a9bff; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 17px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; color: var(--fg); background: var(--bg); }
+  main { max-width: 42rem; margin: 0 auto; padding: 3rem 1.25rem 4rem; }
+  header { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+  header .brand { font-weight: 700; letter-spacing: .02em; }
+  header a { color: var(--muted); text-decoration: none; }
+  h1 { font-size: 2rem; line-height: 1.2; margin: 2.5rem 0 1rem; }
+  h2 { font-size: 1.25rem; margin: 2.5rem 0 .75rem; }
+  p, li { color: var(--fg); }
+  .lead { font-size: 1.15rem; color: var(--muted); }
+  ol, ul { padding-left: 1.3rem; }
+  li { margin: .35rem 0; }
+  .grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); margin-top: 1rem; }
+  .card { border: 1px solid var(--line); border-radius: 12px; padding: 1rem 1.1rem; }
+  .card h3 { margin: 0 0 .4rem; font-size: 1rem; }
+  .card p { margin: 0; color: var(--muted); font-size: .95rem; }
+  .status { border-left: 3px solid var(--accent); padding: .2rem 0 .2rem 1rem; color: var(--muted); }
+  footer { margin-top: 3.5rem; padding-top: 1.25rem; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; }
+  code { font: .92em ui-monospace, SFMono-Regular, Menlo, monospace; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <a class="brand" href="/ja/">NoiseStorage</a>
+    <a href="/privacy.html" lang="en">English</a>
+  </header>
+
+  <h1>プライバシーポリシー</h1>
+  <p class="status">下書き（2026 年 10 月）。アプリはまだ配布していません。</p>
+  <p class="lead">NoiseStorage はあなたについて何も集めません。アカウント、利用状況の解析、広告、クラッシュの自動送信はありません。</p>
+
+  <h2>あなたの端末にあるもの</h2>
+  <ul>
+    <li>24 語の復元フレーズ。端末のキーチェーンにあり、iCloud には同期しません。</li>
+    <li>転送の待ち行列と検索の索引（暗号化したデータベース）。</li>
+    <li>受信したファイル（アプリ専用の場所）。</li>
+  </ul>
+
+  <h2>あなたのサーバーにあるもの</h2>
+  <p>ファイル、ファイルの一覧、それを開く鍵は、端末の中で暗号化してから送ります。サーバーが持つのはその暗号文と、端末ごとの公開鍵とトークンの
+  ハッシュだけです。サーバーはあなたのもので、開発者はそこに入れず、何の写しも持ちません。</p>
+
+  <h2>ほかの人に見えるもの</h2>
+  <ul>
+    <li>あなたの回線とサーバーの業者には、サーバーの住所と通信の量が見えます。中身は見えません。</li>
+    <li><strong>iPhone での購入</strong>は App Store を通ります。販売者は Apple です。NoiseStorage は名前・メールアドレス・支払いの情報を
+      受け取らず、アプリが知るのは Plus が有効かどうかだけです。</li>
+    <li><strong>Mac アプリの更新の知らせ</strong>は、1 日 1 回 <code>https://noisestorage.com/version.json</code> を読みます。要求に乗るのは
+      あなたの IP アドレスとシステムの標準のヘッダーだけで、あなたや Mac を識別するものはありません。サイトは GitHub Pages に置いており、
+      GitHub のアクセスの記録とプライバシーの方針が適用されます。</li>
+  </ul>
+
+  <h2>サポートに連絡したとき</h2>
+  <p>送られた内容は返事のためだけに使います。アプリの「診断情報をコピー」は、版・状態・件数をクリップボードに写すだけで、ファイル名・鍵・
+  住所は含みません。送るかどうかはあなたが決めます。</p>
+
+  <h2>変更</h2>
+  <p>この方針を変えるときは、このページに日付とともに載せます。</p>
+
+  <footer>
+    <p><a href="/ja/privacy.html">プライバシーポリシー</a> · <a href="/ja/terms.html">利用規約</a> · <a href="/ja/support.html">サポート</a></p>
+  </footer>
+</main>
+</body>
+</html>

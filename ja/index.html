@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NoiseStorage — 雑音しか置かないストレージ</title>
+<meta name="description" content="NoiseStorage は個人用の E2E 暗号化ストレージ。ファイルは端末の中で暗号化され、サーバーは暗号文しか持たず、鍵の無い相手には何も答えません。">
+<link rel="alternate" hreflang="en" href="https://noisestorage.com/">
+<link rel="alternate" hreflang="ja" href="https://noisestorage.com/ja/">
+<link rel="canonical" href="https://noisestorage.com/ja/">
+<style>
+  :root { color-scheme: light dark; --fg: #1b1b1f; --bg: #fbfbfd; --muted: #5f6368; --line: #e3e3e8; --accent: #2f5bea; }
+  @media (prefers-color-scheme: dark) { :root { --fg: #e8e8ee; --bg: #121216; --muted: #a0a0ab; --line: #2a2a31; --accent: #7a9bff; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 17px/1.8 -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif; color: var(--fg); background: var(--bg); }
+  main { max-width: 42rem; margin: 0 auto; padding: 3rem 1.25rem 4rem; }
+  header { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+  header .brand { font-weight: 700; letter-spacing: .02em; }
+  header a { color: var(--muted); text-decoration: none; }
+  h1 { font-size: 1.9rem; line-height: 1.3; margin: 2.5rem 0 1rem; }
+  h2 { font-size: 1.2rem; margin: 2.5rem 0 .75rem; }
+  .lead { font-size: 1.1rem; color: var(--muted); }
+  ol, ul { padding-left: 1.3rem; }
+  li { margin: .35rem 0; }
+  .grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); margin-top: 1rem; }
+  .card { border: 1px solid var(--line); border-radius: 12px; padding: 1rem 1.1rem; }
+  .card h3 { margin: 0 0 .4rem; font-size: 1rem; }
+  .card p { margin: 0; color: var(--muted); font-size: .95rem; }
+  .status { border-left: 3px solid var(--accent); padding: .2rem 0 .2rem 1rem; color: var(--muted); }
+  footer { margin-top: 3.5rem; padding-top: 1.25rem; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; }
+  code { font: .92em ui-monospace, SFMono-Regular, Menlo, monospace; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <span class="brand">NoiseStorage</span>
+    <a href="/" lang="en">English</a>
+  </header>
+
+  <h1>雑音しか置かないストレージ。</h1>
+  <p class="lead">NoiseStorage は、自分の小さなサーバーで動かす個人用の E2E 暗号化ストレージです。ファイルは Mac や iPhone の中で暗号化されてから出ていき、
+  サーバーは暗号文の塊だけを持ちます。鍵を持たない相手には、サーバーは何も答えません。</p>
+
+  <h2>仕組み</h2>
+  <ol>
+    <li><strong>端末で暗号化する。</strong>ファイルは塊に分けられ、版ごとに新しいランダムな鍵で暗号化されます。名前・フォルダ・版・ゴミ箱は、端末だけが
+      読める暗号化された台帳に入ります。すべての鍵は 24 語の復元フレーズから作られ、端末の外に出ません。</li>
+    <li><strong>内蔵のトンネルでサーバーへ。</strong>アプリは WireGuard を内蔵し、その中を QUIC で運びます。VPN の設定もブラウザのログインも、開いた Web の
+      ポートもありません。登録された鍵を持たない相手には一切返事をしないので、サーバーは見えません。</li>
+    <li><strong>雑音を置く。</strong>サーバーはディスクに不透明な塊を置くだけで、読むことも、名前を付けることも、まとめることも、復元することもできません。
+      サーバーを失えば暗号文を失うだけ。フレーズを失えばデータを失います。</li>
+  </ol>
+
+  <h2>サーバーが知らないもの</h2>
+  <div class="grid">
+    <div class="card"><h3>中身</h3><p>送る前に暗号化されます。サーバーは平文を 1 バイトも見ません。</p></div>
+    <div class="card"><h3>名前とフォルダ</h3><p>版やゴミ箱と一緒に、暗号化された台帳の中にあります。</p></div>
+    <div class="card"><h3>あなたが誰か</h3><p>端末は鍵で認証します。アカウントもパスワードもメールアドレスもありません。</p></div>
+    <div class="card"><h3>存在していること</h3><p>UDP のポートが 1 つだけ。鍵が無ければ沈黙します。探すものも、ログインするものもありません。</p></div>
+  </div>
+
+  <h2>隠さないもの</h2>
+  <ul>
+    <li>どれだけ置いているか、いつ送ったか: 塊の数と大きさ、転送の時刻。</li>
+    <li>サーバーの場所: あなたの回線には相手の IP とポートが見え、VPS の業者は契約者を知っています。</li>
+    <li>復元フレーズを失えば、データは戻りません。リセットは設計上ありません。</li>
+  </ul>
+
+  <h2>自分で動かす</h2>
+  <p>サーバーは Linux 向けの 1 つのバイナリです。大きなディスクの小さな VPS で足ります。作者は 1 TB のストレージ VPS（CPU 1 コア、メモリ 1 GB）で動かしています。
+  開くのは UDP のポート 1 つだけで、ほかはすべて閉じたまま。端末の追加は、1 回限りのコードか、設定済みの端末が出す QR コードで行います。</p>
+
+  <h2>いまの状態</h2>
+  <p class="status">作者が毎日使っている個人プロジェクトです。Mac と iPhone のアプリはまだ配布しておらず、ソースコードもまだ公開していません。
+  変わったらこのページでお知らせします。</p>
+
+  <footer>
+    <p>NoiseStorage — <code>noisestorage.com</code>。このページに Cookie・スクリプト・解析はありません。</p>
+    <p><a href="/ja/privacy.html">プライバシーポリシー</a> · <a href="/ja/terms.html">利用規約</a> · <a href="/ja/support.html">サポート</a></p>
+  </footer>
+</main>
+</body>
+</html>

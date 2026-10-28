@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NoiseStorage — storage that only ever holds noise</title>
+<meta name="description" content="NoiseStorage is personal end-to-end encrypted storage. Files are encrypted on your device; the server holds only ciphertext and answers nobody without a key.">
+<link rel="alternate" hreflang="ja" href="https://noisestorage.com/ja/">
+<link rel="alternate" hreflang="en" href="https://noisestorage.com/">
+<link rel="canonical" href="https://noisestorage.com/">
+<style>
+  :root { color-scheme: light dark; --fg: #1b1b1f; --bg: #fbfbfd; --muted: #5f6368; --line: #e3e3e8; --accent: #2f5bea; }
+  @media (prefers-color-scheme: dark) { :root { --fg: #e8e8ee; --bg: #121216; --muted: #a0a0ab; --line: #2a2a31; --accent: #7a9bff; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 17px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; color: var(--fg); background: var(--bg); }
+  main { max-width: 42rem; margin: 0 auto; padding: 3rem 1.25rem 4rem; }
+  header { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; }
+  header .brand { font-weight: 700; letter-spacing: .02em; }
+  header a { color: var(--muted); text-decoration: none; }
+  h1 { font-size: 2rem; line-height: 1.2; margin: 2.5rem 0 1rem; }
+  h2 { font-size: 1.25rem; margin: 2.5rem 0 .75rem; }
+  p, li { color: var(--fg); }
+  .lead { font-size: 1.15rem; color: var(--muted); }
+  ol, ul { padding-left: 1.3rem; }
+  li { margin: .35rem 0; }
+  .grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); margin-top: 1rem; }
+  .card { border: 1px solid var(--line); border-radius: 12px; padding: 1rem 1.1rem; }
+  .card h3 { margin: 0 0 .4rem; font-size: 1rem; }
+  .card p { margin: 0; color: var(--muted); font-size: .95rem; }
+  .status { border-left: 3px solid var(--accent); padding: .2rem 0 .2rem 1rem; color: var(--muted); }
+  footer { margin-top: 3.5rem; padding-top: 1.25rem; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; }
+  code { font: .92em ui-monospace, SFMono-Regular, Menlo, monospace; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <span class="brand">NoiseStorage</span>
+    <a href="/ja/" lang="ja">日本語</a>
+  </header>
+
+  <h1>Storage that only ever holds noise.</h1>
+  <p class="lead">NoiseStorage is personal, end-to-end encrypted storage you run on your own small server. Your files are encrypted
+  on your Mac or iPhone before they leave it. The server stores chunks of ciphertext and nothing else, and it answers nobody who
+  does not hold a key.</p>
+
+  <h2>How it works</h2>
+  <ol>
+    <li><strong>Encrypt on the device.</strong> Every file is split into chunks and encrypted with a fresh random key per version.
+      Names, folders, versions and the trash live in an encrypted index that only your devices can read. All keys descend from a
+      24-word recovery phrase that never leaves your devices.</li>
+    <li><strong>Reach the server through a built-in tunnel.</strong> The app embeds WireGuard, with QUIC inside it. No VPN profile,
+      no browser login, no open web port. Anyone without a registered key gets no reply at all — the server is invisible to them.</li>
+    <li><strong>Store noise.</strong> The server keeps opaque blobs on a disk. It cannot read, name, group or restore anything.
+      Losing the server means losing ciphertext; losing the phrase means losing the data.</li>
+  </ol>
+
+  <h2>What the server cannot see</h2>
+  <div class="grid">
+    <div class="card"><h3>File contents</h3><p>Encrypted before upload. The server never sees a plaintext byte.</p></div>
+    <div class="card"><h3>Names and folders</h3><p>Kept in the encrypted index, together with versions and the trash.</p></div>
+    <div class="card"><h3>Who you are</h3><p>Devices authenticate with keys. There are no accounts, passwords or e-mail addresses.</p></div>
+    <div class="card"><h3>That it exists</h3><p>One UDP port that stays silent without a key. Nothing to scan, nothing to log in to.</p></div>
+  </div>
+
+  <h2>What it does not hide</h2>
+  <ul>
+    <li>How much you store and when: the number and sizes of blobs, and the timing of transfers.</li>
+    <li>Your server's address: your network sees the IP and port you talk to, and the hosting provider knows who rents it.</li>
+    <li>A lost recovery phrase is a lost archive. There is no reset, by design.</li>
+  </ul>
+
+  <h2>Run it yourself</h2>
+  <p>The server is a single static binary for Linux. A small VPS with a large disk is enough — the author runs it on a 1 TB storage
+  VPS with one CPU core and 1 GB of memory. It opens exactly one UDP port; everything else stays closed. Devices are added with a
+  one-time code or a QR code shown by a device that is already set up.</p>
+
+  <h2>Status</h2>
+  <p class="status">A personal project, in daily use by its author. The Mac and iPhone apps are not distributed yet and the source
+  code is not published yet. This page will say when that changes.</p>
+
+  <footer>
+    <p>NoiseStorage — <code>noisestorage.com</code>. No cookies, no scripts, no analytics on this page.</p>
+    <p><a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a> · <a href="/support.html">Support</a></p>
+  </footer>
+</main>
+</body>
+</html>
