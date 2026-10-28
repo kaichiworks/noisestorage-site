@@ -9,7 +9,7 @@ set -euo pipefail
 
 REPO=https://github.com/kaichiworks/noisestorage-server
 # The public half of the release signing key, as an ssh-keygen allowed_signers line (docs/ops/release-server.md)
-SIGNER=''
+SIGNER='noisestorage-release namespaces="noisestorage-release" ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICpmkWdxhIwaLjfd8YJKrqj+M7neEG7WRSLbMZYi84ZI'
 
 fail() {
     echo "error: $*" >&2
