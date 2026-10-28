@@ -5,6 +5,8 @@
 # and the SHA-256 of each file, then runs setup.sh, which asks a few questions (spec v0.15 §3.1).
 # Options are passed on to setup.sh, e.g. for automation:
 #   curl -fsSL https://noisestorage.com/install.sh | sudo bash -s -- --path wireguard --advertise wg.example.com:51820 --yes
+# Another release than the latest (a pre-release to try, for example), still checked the same way:
+#   curl -fsSL https://noisestorage.com/install.sh | sudo NOISTO_RELEASE=v0.1.0-rc.1 bash
 set -euo pipefail
 
 REPO=https://github.com/kaichiworks/noisestorage-server
@@ -27,14 +29,19 @@ main() {
         *) fail "unsupported CPU: $ARCH (x86_64 and aarch64 are supported)" ;;
     esac
 
-    # The latest release, fixed once so that every file comes from the same one
-    LATEST=$(curl -fsSIL --proto '=https' -o /dev/null -w '%{url_effective}' "$REPO/releases/latest") \
-        || fail "cannot reach $REPO"
-    TAG=${LATEST##*/}
-    case "$LATEST" in
-        */releases/tag/*) ;;
-        *) fail "no release found at $REPO/releases" ;;
-    esac
+    # The latest release, or the one named in NOISTO_RELEASE (e.g. a pre-release to try), fixed once so that every
+    # file comes from the same one
+    if [ -n "${NOISTO_RELEASE:-}" ]; then
+        TAG=$NOISTO_RELEASE
+    else
+        LATEST=$(curl -fsSIL --proto '=https' -o /dev/null -w '%{url_effective}' "$REPO/releases/latest") \
+            || fail "cannot reach $REPO"
+        TAG=${LATEST##*/}
+        case "$LATEST" in
+            */releases/tag/*) ;;
+            *) fail "no release found at $REPO/releases" ;;
+        esac
+    fi
     case "$TAG" in
         ''|*[!A-Za-z0-9._-]*) fail "unexpected release name: $TAG" ;;
     esac
